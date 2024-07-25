@@ -4,24 +4,53 @@
 int main ()
 {
     char entry[100];
+    char name[100];
     char password[100];
+    char user_name[100] = "Arthur_Morgan2027";
     char user_password[100] = "John";
 
-    printf("Hello welcome to scribble :)\n");
-    printf("Please enter your password to access the app: "); 
-    fgets(password, sizeof(password), stdin);
-    password[strlen(password) - 1] = '\0'; // Remove newline character
+ printf("      _____      \n");
+    printf("  .-'`     `'-.  \n");
+    printf(" /  o       o  \\ \n");
+    printf("|           `  | \n");
+    printf("|     .----.   | \n");
+    printf(" \\   '._.'   /  \n");
+    printf("  '-._____.-'   \n");
 
-    while(strcmp(password, user_password) != 0)
+    printf("Hello welcome to scribble\n)");
+
+
+    printf("Please enter your username and password to access the app: \n\n"); 
+
+    printf("Enter your user name: "); 
+    fgets(password, sizeof(name), stdin);
+
+    printf("Enter your password: ");
+    fgets(password, sizeof(password), stdin);
+
+    name[strlen(name) - 1] = '\0'; 
+    password[strlen(password) - 1] = '\0'; 
+
+    while(strcmp(password, user_password) != 0 && strcmp (name, user_name) != 0 )
     {
-        printf("Incorrect password. Please try again: "); 
-        fgets(password, sizeof(password), stdin);
-        password[strlen(password) - 1] = '\0'; 
+    printf("Enter your user name: "); 
+    fgets(password, sizeof(name), stdin);
+
+    printf("Enter your password: ");
+    fgets(password, sizeof(password), stdin);
+
+    name[strlen(name) - 1] = '\0'; 
+    password[strlen(password) - 1] = '\0'; 
     }
 
+
+
+
+    //
     printf("Please, tell me what's on your mind: ");
     fgets(entry, sizeof(entry), stdin);
     printf("%s\n", entry);
 
     return 0;
 }
+
