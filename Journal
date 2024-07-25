@@ -1,25 +1,95 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+
+void register_for_scribble( )
+{
+
+//Code that will allow the user to create a user name and password
+
+}
+void login( )
+{
+
+//Code that will allow you to log in 
+
+}
+void create_new_entry() 
+{
+
+
+
+}
+void view_entry() 
+{
+
+
+
+}
+void edit_entry() 
+{
+
+
+
+}
+void delete_entry() 
+{
+
+
+
+}
+void search_for_entry() 
+{
+
+
+
+}
+void exit_the_program() 
+{
+
+printf("Of course, ciao\n");
+exit(0); 
+
+
+}
+void error_message( )
+{
+    printf("This page is currently unavailable\n");
+    printf("If you need further help please call 817-739-3672 and ask for Arthur ");
+}
 
 int main ()
 {
     char entry[100];
     char name[100];
+    int choice; 
     char password[100];
     char user_name[100] = "Arthur_Morgan2027";
     char user_password[100] = "John";
 
- printf("      _____      \n");
-    printf("  .-'`     `'-.  \n");
-    printf(" /  o       o  \\ \n");
-    printf("|           `  | \n");
-    printf("|     .----.   | \n");
-    printf(" \\   '._.'   /  \n");
-    printf("  '-._____.-'   \n");
+  printf("  ____________             __________\n");
+    printf(" /           /\\           /         /|\n");
+    printf("/___________/  \\        /__________/ |\n");
+    printf("|           \\   \\      /           | |\n");
+    printf("|            \\   \\    /            | |\n");
+    printf("|             \\   \\  /             | |\n");
+    printf("|              \\   \\/              | |    * *\n");
+    printf("|                \\/      **        | |  *   *\n");
+    printf("|                    * *  *    *   | |*   *\n");
+    printf("|                    *  *     *  * | *  *\n");
+    printf("|                  *  ** *     *  * *  *\n");
+    printf("|           |\\    * * /|* *     *  *  *\n");
+    printf("|           | \\      / | * *     *   *\n");
+    printf("|           |  \\    /  |  * *     ***|\n");
+    printf("|           |  | \\/    |    *      | |\n");
+    printf("|           |  |       |           | |\n");
+    printf("|           |  |       |           | |\n");
+    printf("|           |  |       |           | |\n");
+    printf("|___________| /        |___________|/\n");
 
     printf("Hello welcome to scribble\n)");
-
-
     printf("Please enter your username and password to access the app: \n\n"); 
 
     printf("Enter your user name: "); 
@@ -33,6 +103,7 @@ int main ()
 
     while(strcmp(password, user_password) != 0 && strcmp (name, user_name) != 0 )
     {
+    printf("Incorrect credentials, renter your information.\n"); 
     printf("Enter your user name: "); 
     fgets(password, sizeof(name), stdin);
 
@@ -43,14 +114,72 @@ int main ()
     password[strlen(password) - 1] = '\0'; 
     }
 
+    printf("Welcome :), what would you like to do today?\n");
+        printf("1. Register\n");
+        printf("2. Login\n");
+        printf("3. Create Diary Entry\n");
+        printf("4. View Diary Entries\n");
+        printf("5. Edit Diary Entry\n");
+        printf("6. Delete Diary Entry\n");
+        printf("7. Search Diary Entries\n");
+        printf("8. Categorize Entries\n");
+        printf("9. View Calendar\n");
+        printf("10. Backup Entries\n");
+        printf("11. Restore Entries\n");
+        printf("12. Help\n");
+        printf("13. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
+        switch (choice)
+        {
+            case 1: 
+            error_message();
+            break;
+             case 2: 
+            error_message();
+            break;
+             case 3: 
+            error_message();
+            break;
+             case 4: 
+            error_message();
+            break;
+             case 5: 
+            error_message();
+            break;
+             case 6: 
+            error_message();
+            break;
+             case 7: 
+            error_message();
+            break;
+             case 8: 
+            error_message();
+            break;
+             case 9: 
+            error_message();
+            break;
+             case 10: 
+            error_message();
+            break;
+             case 11: 
+            error_message();
+            break;
+             case 12: 
+            error_message();
+            break;
+             case 13: 
+            exit_the_program();
+            break;
+        }
 
-
-    //
-    printf("Please, tell me what's on your mind: ");
-    fgets(entry, sizeof(entry), stdin);
-    printf("%s\n", entry);
+ //   error_message();
+  //  printf("Please, tell me what's on your mind: ");
+  //  fgets(entry, sizeof(entry), stdin);
+  //  printf("%s\n", entry);  
 
     return 0;
 }
+
 
