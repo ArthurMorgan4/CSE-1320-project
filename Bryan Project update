@@ -997,7 +997,7 @@ int main ()
     char name[100];
     int choice; 
     char password[100];
-    char user_name[100] = "Athur_morgan2027";
+    char user_name[100] = "Arthur_morgan2027";
     char user_password[100] = "John";
     struct Entries e = {"","","","","","","","","","","","","","",""};
     struct Backup b = {"","","","","","","","","","","","","","",""};
