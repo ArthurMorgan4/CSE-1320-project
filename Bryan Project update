@@ -23,6 +23,24 @@ struct Entries
 	char entry14[200];
 	char entry15[200];
 };
+struct Backup
+{
+    char back1[200];
+	char back2[200];
+	char back3[200];
+	char back4[200];
+	char back5[200];
+	char back6[200];
+	char back7[200];
+	char back8[200];
+	char back9[200];
+	char back10[200];
+	char back11[200];
+	char back12[200];
+	char back13[200];
+	char back14[200];
+	char back15[200];
+};
 typedef struct
 {
     char NewUserName[100];
@@ -594,6 +612,385 @@ void calendar()
     printf(" 25  26  27  28  29  30  31\n");
     printf("--- --- --- --- --- --- ---\n");
 }
+void Backup(struct Entries* e, struct Backup* b)
+{
+    int option;
+    printf("Which entry do you want to backup from 1-15?\n");
+    scanf("%d",&option);
+    switch(option)
+    {
+        case 1:
+        if(strlen(e->entry1) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry1);
+            strcpy(b->back1, e->entry1);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 2:
+        if(strlen(e->entry2) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry2);
+            strcpy(b->back2, e->entry2);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 3:
+        if(strlen(e->entry3) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry3);
+            strcpy(b->back3, e->entry3);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 4:
+        if(strlen(e->entry4) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry4);
+            strcpy(b->back4, e->entry4);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 5:
+        if(strlen(e->entry5) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry5);
+            strcpy(b->back5, e->entry5);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 6:
+        if(strlen(e->entry6) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry6);
+            strcpy(b->back6, e->entry6);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 7:
+        if(strlen(e->entry7) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry7);
+            strcpy(b->back7, e->entry7);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 8:
+        if(strlen(e->entry8) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry8);
+            strcpy(b->back8, e->entry8);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 9:
+        if(strlen(e->entry9) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry9);
+            strcpy(b->back9, e->entry9);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 10:
+        if(strlen(e->entry10) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry10);
+            strcpy(b->back10, e->entry10);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 11:
+        if(strlen(e->entry1) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry11);
+            strcpy(b->back11, e->entry11);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+                case 12:
+        if(strlen(e->entry1) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry12);
+            strcpy(b->back12, e->entry12);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+                case 13:
+        if(strlen(e->entry1) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry13);
+            strcpy(b->back13, e->entry13);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 14:
+        if(strlen(e->entry14) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry14);
+            strcpy(b->back14, e->entry14);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        case 15:
+        if(strlen(e->entry15) > 0)
+        {
+            printf("This entry will be saved: %s", e->entry15);
+            strcpy(b->back15, e->entry15);
+            printf("Backup Complete\n");
+        }
+        else
+        {
+            printf("There is no data to backup\n");
+        }
+        break;
+        
+    }
+}
+void Restore(struct Entries* e, struct Backup* b)
+{
+    int option;
+    printf("Which entry do you want to restore?\n");
+    scanf("%d", &option);
+    switch(option)
+    {
+        case 1:
+        if(strlen(b->back1) > 0)
+        {
+            printf("This entry will be restored: %s", b->back1);
+            strcpy(e->entry1, b->back1);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 2:
+        if(strlen(b->back2) > 0)
+        {
+            printf("This entry will be restored: %s", b->back2);
+            strcpy(e->entry2, b->back2);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 3:
+        if(strlen(b->back3) > 0)
+        {
+            printf("This entry will be restored: %s", b->back3);
+            strcpy(e->entry3, b->back3);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 4:
+        if(strlen(b->back4) > 0)
+        {
+            printf("This entry will be restored: %s", b->back4);
+            strcpy(e->entry4, b->back4);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 5:
+        if(strlen(b->back5) > 0)
+        {
+            printf("This entry will be restored: %s", b->back5);
+            strcpy(e->entry5, b->back5);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 6:
+        if(strlen(b->back6) > 0)
+        {
+            printf("This entry will be restored: %s", b->back6);
+            strcpy(e->entry6, b->back6);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 7:
+        if(strlen(b->back7) > 0)
+        {
+            printf("This entry will be restored: %s", b->back7);
+            strcpy(e->entry7, b->back7);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 8:
+        if(strlen(b->back1) > 0)
+        {
+            printf("This entry will be restored: %s", b->back8);
+            strcpy(e->entry8, b->back8);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 9:
+        if(strlen(b->back9) > 0)
+        {
+            printf("This entry will be restored: %s", b->back9);
+            strcpy(e->entry9, b->back9);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 10:
+        if(strlen(b->back10) > 0)
+        {
+            printf("This entry will be restored: %s", b->back10);
+            strcpy(e->entry10, b->back10);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 11:
+        if(strlen(b->back11) > 0)
+        {
+            printf("This entry will be restored: %s", b->back11);
+            strcpy(e->entry11, b->back11);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 12:
+        if(strlen(b->back12) > 0)
+        {
+            printf("This entry will be restored: %s", b->back12);
+            strcpy(e->entry12, b->back12);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 13:
+        if(strlen(b->back13) > 0)
+        {
+            printf("This entry will be restored: %s", b->back13);
+            strcpy(e->entry13, b->back13);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+        case 14:
+        if(strlen(b->back14) > 0)
+        {
+            printf("This entry will be restored: %s", b->back14);
+            strcpy(e->entry14, b->back14);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+                case 15:
+        if(strlen(b->back15) > 0)
+        {
+            printf("This entry will be restored: %s", b->back15);
+            strcpy(e->entry15, b->back15);
+            printf("Entry has been restored");
+        }
+        else
+        {
+            printf("There is no backup's available");
+        }
+        break;
+    }
+}
 int main ()
 {
     char entry[100];
@@ -603,6 +1000,7 @@ int main ()
     char user_name[100] = "2";
     char user_password[100] = "John";
     struct Entries e = {"","","","","","","","","","","","","","",""};
+    struct Backup b = {"","","","","","","","","","","","","","",""};
   printf("  ____________             __________\n");
     printf(" /           /\\           /         /|\n");
     printf("/___________/  \\        /__________/ |\n");
@@ -695,10 +1093,10 @@ int main ()
 				calendar();
 				break;
 			case 10:
-				error_message();
+				Backup(&e,&b);
 				break;
 			case 11:
-				error_message();
+				Restore(&e, &b);
 				break;
 			case 12:
 				error_message();
