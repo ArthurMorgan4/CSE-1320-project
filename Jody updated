@@ -3,26 +3,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+//I me mine
 // Using Alexey's Entries to search
-struct Entries
-{
-	char entry1[200];
-	char entry2[200];
-	char entry3[200];
-	char entry4[200];
-	char entry5[200];
-	char entry6[200];
-	char entry7[200];
-	char entry8[200];
-	char entry9[200];
-	char entry10[200];
-	char entry11[200];
-	char entry12[200];
-	char entry13[200];
-	char entry14[200];
-	char entry15[200];
-};
-
 struct Backup
 {
     char back1[200];
@@ -40,6 +22,14 @@ struct Backup
 	char back13[200];
 	char back14[200];
 	char back15[200];
+};
+
+struct Entries
+{
+	char Entry[99][251];
+    char View[99][251];
+    int length[99];
+    int find[99];
 };
 
 struct User
@@ -63,42 +53,72 @@ void save_user(struct User user) //text file to save a new user and password
     fclose(file);
 }
 
-int get_user(struct User *user)
+int get_user(struct User *user, char *username)
 {
     FILE *file = fopen("Users.txt", "r");
     if(file == NULL)
     {
         return 0;
     }
-    fscanf(file, "%s\n%s\n", user->NewUserName, user->NewPassword);
+
+    char tempUser[100];
+    char tempPassword[100];
+    while(fscanf(file, "%s\n%s\n", tempUser, tempPassword) != EOF)
+    {
+        if(strcmp(tempUser, username) == 0)
+        {
+            strcpy(user->NewUserName, tempUser);
+            strcpy(user->NewPassword, tempPassword);
+            fclose(file);
+            return 1;
+        }
+    }
     fclose(file);
-    return 1;
+    return 0;
 }
 
-void register_for_scribble()
+void register_for_scribble() //allows the user to register with a username and password
 {
-    if(get_user(&newUser))
-    {
-        printf("Username is already taken. Please log in. \n");
-        return;
-    }
-
-    //Code that will allow the user to create a user name and password
     printf("Create a Username: ");
     scanf("%s", newUser.NewUserName);
+
+    if(check_user(newUser.NewUserName))
+    {
+        printf("Username is already taken. Try another one.\n");
+        return;
+    }
 
     printf("Create a Password: ");
     scanf("%s", newUser.NewPassword);
 
     save_user(newUser);
 
-    printf(" User has been registered! \n");
+    printf("\nUser has been registered! \n");
     
 }
 
-void login()
+int check_user(char *username)
 {
-//Code that will allow you to log in using the stored username and password
+    FILE *file = fopen("Users.txt", "r");
+    if(file == NULL)
+    {
+        return 0;
+    }
+    char tempUser[100];
+    while(fscanf(file, "%s\n%s\n", tempUser, NULL) != EOF){
+    if(strcmp(tempUser, username) == 0)
+    {
+        fclose(file);
+        return 1;
+    }
+}
+
+fclose(file);
+return 0;
+}
+
+int login() //Uses the users information from registering to login
+{
 struct User loginUser;
 printf("Enter Username: \n");
 scanf("%s", loginUser.NewUserName);
@@ -107,550 +127,352 @@ printf("Enter Password: \n");
 scanf("%s", loginUser.NewPassword);
 
 struct User storedUser;
-if(!get_user(&storedUser))
+if(!get_user(&storedUser, loginUser.NewUserName))
 {
     printf("No user registered, please register.\n");
-    return;
+    return 0;
 }
 
 if(strcmp(loginUser.NewUserName, storedUser.NewUserName) == 0 && 
     strcmp(loginUser.NewPassword, storedUser.NewPassword) == 0){
-        printf("Login successful! \n");
+        printf("\nLogin successful! \n");
+        return 1;
     }else{
         printf("Wrong Username and Password. \n");
+        return 0;
     }
 
 }
-void create_new_entry(struct Entries* e)
+
+void create_new_entry(struct Entries* e) //opens all file in read mode to check if file is empty
 {
-	if(strlen(e->entry1)==0)
-	{
-    printf("Enter a string for entry 1: ");
-    fgets(e->entry1, sizeof(e->entry1), stdin);
-    }
-    else if (strlen(e->entry2) == 0) {
-        printf("Enter a string for entry 2: ");
-        fgets(e->entry2, sizeof(e->entry2), stdin);
-    }
-    else if (strlen(e->entry3) == 0) {
-        printf("Enter a string for entry 3: ");
-        fgets(e->entry3, sizeof(e->entry3), stdin);
-    }
-    else if (strlen(e->entry4) == 0) {
-        printf("Enter a string for entry 4: ");
-        fgets(e->entry4, sizeof(e->entry4), stdin);
-    }
-    else if (strlen(e->entry5) == 0) {
-        printf("Enter a string for entry 5: ");
-        fgets(e->entry5, sizeof(e->entry5), stdin);
-    }
-    else if (strlen(e->entry6) == 0) {
-        printf("Enter a string for entry 6: ");
-        fgets(e->entry6, sizeof(e->entry6), stdin);
-    }
-    else if (strlen(e->entry7) == 0) {
-        printf("Enter a string for entry 7: ");
-        fgets(e->entry7, sizeof(e->entry7), stdin);
-    }
-    else if (strlen(e->entry8) == 0) {
-        printf("Enter a string for entry 8: ");
-        fgets(e->entry8, sizeof(e->entry8), stdin);
-    }
-    else if (strlen(e->entry9) == 0) {
-        printf("Enter a string for entry 9: ");
-        fgets(e->entry9, sizeof(e->entry9), stdin);
-    }
-    else if (strlen(e->entry10) == 0) {
-        printf("Enter a string for entry 10: ");
-        fgets(e->entry10, sizeof(e->entry10), stdin);
-    }
-    else if (strlen(e->entry11) == 0) {
-        printf("Enter a string for entry 11: ");
-        fgets(e->entry11, sizeof(e->entry11), stdin);
-    }
-    else if (strlen(e->entry12) == 0) {
-        printf("Enter a string for entry 12: ");
-        fgets(e->entry12, sizeof(e->entry12), stdin);
-    }
-    else if (strlen(e->entry13) == 0) {
-        printf("Enter a string for entry 13: ");
-        fgets(e->entry13, sizeof(e->entry13), stdin);
-    }
-    else if (strlen(e->entry14) == 0) {
-        printf("Enter a string for entry 14: ");
-        fgets(e->entry14, sizeof(e->entry14), stdin);
-    }
-    else if (strlen(e->entry15) == 0) {
-        printf("Enter a string for entry 15: ");
-        fgets(e->entry15, sizeof(e->entry15), stdin);
-    }
-    else {
-        printf("All available entries are filled, please delete one of the previous entries before adding the next one");}
-}
+    printf("Entries should not exceed 250 characters(including spaces) limit\n");
+    int count = 0;
+    FILE *entries;
+    FILE *view;
+    FILE *backup;
 
+    entries=fopen("entries.txt", "r");
+    view=fopen("view.txt", "r");
+    backup=fopen("backup.txt","r");
+
+    if(view==NULL)
+    {
+    printf("File for search can't be opened");
+    return;
+    }
+    if(entries==NULL)
+    {
+    printf("File for entry can't be opened");
+    return;
+    }
+    if(backup==NULL)
+    {
+    printf("File for backup can't be opened");
+    return;
+    }
+
+    fseek(entries, 0, SEEK_END);
+    fseek(backup, 0, SEEK_END);
+    int sizeE = ftell(entries);
+    int sizeB = ftell(backup);
+
+    for(int i=0; i<99; i++)
+    {
+    fscanf(view, "%d", &e->length[i]);
+    }
+
+    fclose(entries);
+    fclose(view);
+    fclose(backup);
+
+    /*if main entry or back file is empty, uses write and read to avoid new line character at the 
+    beginning and append mode if there are other entries to avoid overwriting*/
+    if(sizeE==0 || sizeB==0) 
+    {
+        backup=fopen("backup.txt", "w+");
+        entries=fopen("entries.txt", "w+");
+        view=fopen("view.txt", "w+");
+    }
+    else
+    {
+        backup=fopen("backup.txt", "a+");
+        entries=fopen("entries.txt", "a+");
+        view=fopen("view.txt", "a+");
+    }
+
+    //increments count variable everytime length of the entry does not equal 0 to keep track of current entry year
+    for(int i=0; i<99; i++)
+        {
+            if (e->length[i]!=0)
+            {
+            count++;
+            }
+        }
+
+	for(int i=0; i<99; i++)
+    {
+        if(strlen( e->Entry[i])==0)
+        {
+            printf("Make the entry%d: ", count);
+            fgets(e->Entry[i], sizeof(e->Entry[i]), stdin); //checks for character limit
+
+            int l=strlen(e->Entry[i]);
+            if(l>250)
+            {
+                printf("You exceeded allowed characters number");
+                int clear;
+                while ((clear = getchar()) != '\n' && clear != EOF);
+                fclose(backup);
+                fclose(entries);
+                fclose(view);
+                return;
+            }
+
+    //deletes new lien character which came due fgets function from the array of entries lengths, to have accurate length of each array
+            e->Entry[i][strcspn(e->Entry[i], "\n")] = 0;
+            e->length[i]=strlen(e->Entry[i]);
+
+            fprintf(entries, "%s\n", e->Entry[i]);
+            fprintf(backup,"%s\n", e->Entry[i]);
+            fprintf(view, "%d\n",e->length[i]);
+            break;
+        }
+    }
+
+    fclose(view);
+    fclose(entries);
+    fclose(backup);
+}
 void view_entry(struct Entries* e)
 {
-    int l1 = strlen(e->entry1);
-	int l2 = strlen(e->entry2);
-	int l3 = strlen(e->entry3);
-	int l4 = strlen(e->entry4);
-	int l5 = strlen(e->entry5);
-	int l6 = strlen(e->entry6);
-	int l7 = strlen(e->entry7);
-	int l8 = strlen(e->entry8);
-	int l9 = strlen(e->entry9);
-	int l10 = strlen(e->entry10);
-	int l11 = strlen(e->entry11);
-	int l12 = strlen(e->entry12);
-	int l13 = strlen(e->entry13);
-	int l14 = strlen(e->entry14);
-	int l15 = strlen(e->entry15);
-    int g;
-    printf("choose entry from 1 to 15: ");
-    scanf("%d", &g);
-    
-   switch(g) {
-        case 1:
-        if (l1 > 0) {
-            printf("Entry 1: %s\n", e->entry1);
-        } else {
-            printf("Entry 1 doesn't exist, please create an entry 1\n");
-            }
-        break;
-        case 2:
-        if (l2 > 0) {
-            printf("Entry 2: %s\n", e->entry2);
-        } else {
-            printf("Entry 2 doesn't exist, please create an entry 2\n");
-        }
-        break;
-        case 3:
-        if (l3 > 0) {
-            printf("Entry 3: %s\n", e->entry3);
-        } else {
-            printf("Entry 3 doesn't exist, please create an entry 3\n");
-        }
-        break;
-        case 4:
-        if (l4 > 0) {
-            printf("Entry 4: %s\n", e->entry4);
-        } else {
-            printf("Entry 4 doesn't exist, please create an entry 4\n");
-        }
-        break;
-        case 5:
-        if (l5 > 0) {
-            printf("Entry 5: %s\n", e->entry5);
-        } else {
-            printf("Entry 5 doesn't exist, please create an entry 5\n");
-        }
-        break;
-        case 6:
-        if (l6 > 0) {
-            printf("Entry 6: %s\n", e->entry6);
-        } else {
-            printf("Entry 6 doesn't exist, please create an entry 6\n");
-        }
-        break;
-        case 7:
-        if (l7 > 0) {
-            printf("Entry 7: %s\n", e->entry7);
-        } else {
-            printf("Entry 7 doesn't exist, please create an entry 7\n");
-        }
-        break;
-        case 8:
-        if (l8 > 0) {
-            printf("Entry 8: %s\n", e->entry8);
-        } else {
-            printf("Entry 8 doesn't exist, please create an entry 8\n");
-        }
-        break;
-        case 9:
-        if (l9 > 0) {
-            printf("Entry 9: %s\n", e->entry9);
-        } else {
-            printf("Entry 9 doesn't exist, please create an entry 9\n");
-        }
-        break;
-        case 10:
-        if (l10 > 0) {
-            printf("Entry 10: %s\n", e->entry10);
-        } else {
-            printf("Entry 10 doesn't exist, please create an entry 10\n");
-        }
-        break;
-        case 11:
-        if (l11 > 0) {
-            printf("Entry 11: %s\n", e->entry11);
-        } else {
-            printf("Entry 11 doesn't exist, please create an entry 11\n");
-        }
-        break;
-        case 12:
-        if (l12 > 0) {
-            printf("Entry 12: %s\n", e->entry12);
-        } else {
-            printf("Entry 12 doesn't exist, please create an entry 12\n");
-        }
-        break;
-        case 13:
-        if (l13 > 0) {
-            printf("Entry 13: %s\n", e->entry13);
-        } else {
-            printf("Entry 13 doesn't exist, please create an entry 13\n");
-        }
-        break;
-        case 14:
-        if (l14 > 0) {
-            printf("Entry 14: %s\n", e->entry14);
-        } else {
-            printf("Entry 14 doesn't exist, please create an entry 14\n");
-        }
-        break;
-        case 15:
-        if (l15 > 0) {
-            printf("Entry 15: %s\n", e->entry15);
-        } else {
-            printf("Entry 15 doesn't exist, please create an entry 15\n");
-        }
-        break;
-        default:
-            printf("Invalid entry number. Please choose a number between 1 and 15.\n");
-            break;
+    int stringlocation;
+    int count=0;
+    int userinput;
+    FILE *entries;
+    FILE *view;
+    FILE *backup;
+    entries=fopen("entries.txt", "r");
+    view=fopen("view.txt", "r");
+    backup=fopen("backup.txt","r");
+    if(view==NULL)
+    {
+    printf("File for search can't be opened");
+    return;
     }
+
+    //this is made in case if main entry file cannot be access, so program would grab data from backup file
+    if(entries==NULL)
+    {
+    printf("File for viewing entries can't be opened\n");
+    printf("Loading backup file\n");
+    printf("choose entry from 1 to 99: ");
+    scanf("%d", &userinput);
+    if(userinput<1 || userinput>99)
+    {
+        printf("Error, Invalid entry number");
+    }
+    for(int i=0; i<userinput; i++)
+    {
+    fscanf(view, "%d", &e->length[i]);
+    }
+    for(int i=0; i<userinput-1; i++)
+    {
+        if (e->length[i]!=0)
+        {
+        count++;
+        stringlocation+=e->length[i]+1;
+        }
+    }
+    if(userinput==1)
+    {
+    fseek(backup, 0, SEEK_SET);
+    fgets(e->View[count],sizeof(e->View[count]), backup);
+    if(strlen(e->View[count])==0)
+    {
+        printf("Entry%d doesn't exist", userinput);
+        return;
+    }
+    printf("Entry1 is: %s", e->View[count]);
+    }
+    else
+    {
+        fseek(entries, stringlocation-1, SEEK_SET);
+        fgets(e->View[count],sizeof(e->View[count]), backup);
+        if(strlen(e->View[count])==0)
+        {
+            printf("Entry%d doesn't exist", userinput);
+            return;
+        }
+        printf("Entry%d is: %s",userinput, e->View[count]);
+    }
+    fclose(view);
+    fclose(entries);
+    fclose(backup);
+    }
+    printf("choose entry from 1 to 99: ");
+    scanf("%d", &userinput);
+    if(userinput<1 || userinput>99)
+    {
+        printf("Error, Invalid entry number");
+    }
+    for(int i=0; i<userinput; i++) //grabs entry byte size from the length file
+    {
+    fscanf(view, "%d", &e->length[i]);
+    }
+    for(int i=0; i<userinput-1; i++) // makes summation of each entry byte size desired entry to find entry's byte location from beginning of the view file
+    {
+        if (e->length[i]!=0)
+        {
+        count++;
+        stringlocation+=e->length[i]+1;
+        }
+    }
+    if(userinput==1)
+    {
+    fseek(entries, 0, SEEK_SET);
+    fgets(e->View[count],sizeof(e->View[count]), entries);
+    if(strlen(e->View[count])==0)
+    {
+        printf("Entry%d doesn't exist", userinput);
+        return;
+    }
+    printf("Entry1 is: %s", e->View[count]);
+    }
+    else
+    {
+        //finds entry location in the file and scans entire line into local array and prints result to user
+        fseek(entries, stringlocation-1, SEEK_SET);
+        fgets(e->View[count],sizeof(e->View[count]), entries);
+        if(strlen(e->View[count])==0)
+        {
+            printf("Entry%d doesn't exist", userinput);
+            return;
+        }
+        printf("Entry%d is: %s",userinput, e->View[count]);
+    }
+    fclose(view);
+    fclose(entries);
+    fclose(backup);
 }
+
 void edit_entry(struct Entries* e)
 {
-    int opt;
-    char edit;
-    printf("Choose which entry to edit from 1 to 15: \n");
-    scanf("%d", &opt);
-    switch(opt)
+    printf("Enter the entry you want to edit (1-99): ");
+    int entry_num;
+    scanf("%d", &entry_num);
+    getchar();
+
+    if(entry_num <1 || entry_num > 99 || e->length[entry_num - 1]==0)
     {
-        case 1:
-        printf("This is the entry you want to edit: %s", e->entry1);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry1, &edit);
-        break;
-        case 2:
-        printf("This is the entry you want to edit: %s\n", e->entry2);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry2, &edit);
-        break;
-        case 3:
-        printf("This is the entry you want to edit: %s\n", e->entry3);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry4, &edit);
-        break;
-        case 4:
-        printf("This is the entry you want to edit: %s\n", e->entry4);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry4, &edit);
-        break;
-        case 5:
-        printf("This is the entry you want to edit: %s\n", e->entry5);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry5, &edit);
-        break;
-        case 6:
-        printf("This is the entry you want to edit: %s\n", e->entry6);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry6, &edit);
-        break;
-        case 7:
-        printf("This is the entry you want to edit: %s\n", e->entry7);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry7, &edit);
-        break;
-        case 8:
-        printf("This is the entry you want to edit: %s\n", e->entry8);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry8, &edit);
-        break;
-        case 9:
-        printf("This is the entry you want to edit: %s\n", e->entry9);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry9, &edit);
-        break;
-        case 10:
-        printf("This is the entry you want to edit: %s\n", e->entry10);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry10, &edit);
-        break;
-        case 11:
-        printf("This is the entry you want to edit: %s\n", e->entry11);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry11, &edit);
-        break;
-        case 12:
-        printf("This is the entry you want to edit: %s\n", e->entry12);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry12, &edit);
-        break;
-        case 13:
-        printf("This is the entry you want to edit: %s\n", e->entry13);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry13, &edit);
-        break;
-        case 14:
-        printf("This is the entry you want to edit: %s\n", e->entry14);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry14, &edit);
-        break;
-        case 15:
-        printf("This is the entry you want to edit: %s\n", e->entry15);
-        printf("Write the New Entry:");
-        scanf("%s", &edit);
-        strcpy(e->entry15, &edit);
-        break;
-        default:
-        printf("Not a number between 1-15, Sending User back to Main Menu");
-        break;
-        
+    printf("Invalid entry number. \n");
+    return;
+}
+
+printf("Current entry: %s\n", e->Entry[entry_num - 1]);
+printf("Enter the new entry for %d (max 250 characters): ", entry_num);
+char new_entry[251];
+fgets(new_entry, sizeof(new_entry),stdin);
+
+int l = strlen(new_entry); //check length of new entry
+if(l > 250)
+{
+    printf("The entry is too long\n");
+    int clear;
+    while((clear = getchar()) != '\n' && clear != EOF);
+    return;
+}
+
+new_entry[strcspn(new_entry, "\n")] = 0;
+
+//updates entry with new entry
+strcpy(e->Entry[entry_num - 1], new_entry);
+e->length[entry_num -1] = strlen(new_entry);
+
+//new entries go back to files
+FILE *entries = fopen("entries.txt", "w");
+FILE *view = fopen("view.txt", "w");
+FILE *backup = fopen("backup.txt", "w");
+
+if(entries == NULL || view == NULL || backup == NULL)
+{
+    printf("Error opening files for writing. \n");
+    if (entries) fclose(entries);
+    if (view) fclose(view);
+    if(backup) fclose(backup);
+    return;
+}
+
+for(int i = 0; i < 99; i++)
+{
+    if(e->length[i] != 0)
+    {
+        fprintf(entries, "%s\n", e->Entry[i]);
+        fprintf(view, "%s\n", e->Entry[i]);
+        fprintf(backup, "%d\n", e->length[i]);
+
     }
-    
 }
 
-void delete_entry(struct Entries* e)
-{
+fclose(entries);
+fclose(view);
+fclose(backup);
 
-    int g;
-    printf("choose which entry to delete from 1 to 15: ");
-    scanf("%d", &g);
-    
-   switch(g) {
-        case 1:
-        if (strlen(e->entry1) > 0) {
-        e->entry1[0] = '\0';
-        printf("Entry 1 is deleted");
-        } else {
-            printf("Entry 1 doesn't exist yet\n");
-            }
-        break;
-        case 2:
-        if (strlen(e->entry2) > 0) {
-            e->entry2[0] = '\0';
-            printf("Entry 2 is deleted\n");
-        } else {
-            printf("Entry 2 doesn't exist yet\n");
-        }
-        break;
-        case 3:
-        if (strlen(e->entry3) > 0) {
-            e->entry3[0] = '\0';
-            printf("Entry 3 is deleted\n");
-        } else {
-            printf("Entry 3 doesn't exist yet\n");
-        }
-        break;
-        case 4:
-        if (strlen(e->entry4) > 0) {
-            e->entry4[0] = '\0';
-            printf("Entry 4 is deleted\n");
-        } else {
-            printf("Entry 4 doesn't exist yet\n");
-        }
-        break;
-        case 5:
-        if (strlen(e->entry5) > 0) {
-            e->entry5[0] = '\0';
-            printf("Entry 5 is deleted\n");
-        } else {
-            printf("Entry 5 doesn't exist yet\n");
-        }
-        break;
-        case 6:
-        if (strlen(e->entry6) > 0) {
-            e->entry6[0] = '\0';
-            printf("Entry 6 is deleted\n");
-        } else {
-            printf("Entry 6 doesn't exist yet\n");
-        }
-        break;
-        case 7:
-        if (strlen(e->entry7) > 0) {
-            e->entry7[0] = '\0';
-            printf("Entry 7 is deleted\n");
-        } else {
-            printf("Entry 7 doesn't exist yet\n");
-        }
-        break;
-        case 8:
-        if (strlen(e->entry8) > 0) {
-            e->entry8[0] = '\0';
-            printf("Entry 8 is deleted\n");
-        } else {
-            printf("Entry 8 doesn't exist yet\n");
-        }
-        break;
-        case 9:
-        if (strlen(e->entry9) > 0) {
-            e->entry9[0] = '\0';
-            printf("Entry 9 is deleted\n");
-        } else {
-            printf("Entry 9 doesn't exist yet\n");
-        }
-        break;
-        case 10:
-        if (strlen(e->entry10) > 0) {
-            e->entry10[0] = '\0';
-            printf("Entry 10 is deleted\n");
-        } else {
-            printf("Entry 10 doesn't exist yet\n");
-        }
-        break;
-        case 11:
-        if (strlen(e->entry11) > 0) {
-            e->entry11[0] = '\0';
-            printf("Entry 11 is deleted\n");
-        } else {
-            printf("Entry 11 doesn't exist yet\n");
-        }
-        break;
-        case 12:
-        if (strlen(e->entry12) > 0) {
-            e->entry12[0] = '\0';
-            printf("Entry 12 is deleted\n");
-        } else {
-            printf("Entry 12 doesn't exist yet\n");
-        }
-        break;
-        case 13:
-        if (strlen(e->entry13) > 0) {
-            e->entry13[0] = '\0';
-            printf("Entry 13 is deleted\n");
-        } else {
-            printf("Entry 13 doesn't exist yet\n");
-        }
-        break;
-        case 14:
-        if (strlen(e->entry14) > 0) {
-            e->entry14[0] = '\0';
-            printf("Entry 14 is deleted\n");
-        } else {
-            printf("Entry 14 doesn't exist yet\n");
-        }
-        break;
-        case 15:
-        if (strlen(e->entry15) > 0) {
-            e->entry15[0] = '\0';
-            printf("Entry 15 is deleted\n");
-        } else {
-            printf("Entry 15 doesn't exist yet\n");
-        }
-        break;
-        default:
-        printf("Invalid entry number. Please choose a number between 1 and 15.\n");
-        break;
-   }
+printf("Entry %d update sucessfully.\n", entry_num);
+
 }
 
-void search_for_entry(struct Entries* e) //keywords can be entry1, entry2 when creating the entry
+void search_entry(struct Entries* e)
 {
-    char keyword[200];
-    printf("Search entries using a keyword: ");
-    fgets(keyword, sizeof(keyword), stdin);
-    keyword[strcspn(keyword, "\n")] = '\0';
+    printf("Enter a keyword to search an entry: ");
+    char keyword[251];
+    fgets(keyword, sizeof(keyword),stdin);
+    keyword[strcspn(keyword, "\n")] = 0;
 
+    FILE *entries = fopen("entries.txt", "r");
+    if(entries == NULL)
+    {
+        printf("Files for entries can't be opened\n");
+        return;
+    }
+
+    char line[251];
+    int entry_num = 1;
     int f = 0;
 
-    if(strstr(e->entry1, keyword)!= NULL)
+    while (fgets(line, sizeof(line), entries) != NULL)
     {
-        printf("Entry 1: %s\n", e->entry1);
-        f = 1;
-    }
-    if(strstr(e->entry2, keyword)!= NULL)
-    {
-        printf("Entry 2: %s\n", e->entry2);
-        f = 1;
-    }
-    if(strstr(e->entry3, keyword)!= NULL)
-    {
-        printf("Entry 3: %s\n", e->entry3);
-        f = 1;
-    }
-    if(strstr(e->entry4, keyword)!= NULL)
-    {
-        printf("Entry 4: %s\n", e->entry4);
-        f = 1;
-    }
-    if(strstr(e->entry5, keyword)!= NULL)
-    {
-        printf("Entry 5: %s\n", e->entry5);
-        f = 1;
-    }
-    if(strstr(e->entry6, keyword)!= NULL)
-    {
-        printf("Entry 6: %s\n", e->entry6);
-        f = 1;
-    }
-    if(strstr(e->entry7, keyword)!= NULL)
-    {
-        printf("Entry 7: %s\n", e->entry7);
-        f = 1;
-    }
-    if(strstr(e->entry8, keyword)!= NULL)
-    {
-        printf("Entry 8: %s\n", e->entry8);
-        f = 1;
-    }
-    if(strstr(e->entry9, keyword)!= NULL)
-    {
-        printf("Entry 9: %s\n", e->entry9);
-        f = 1;
-    }
-    if(strstr(e->entry10, keyword)!= NULL)
-    {
-        printf("Entry 10: %s\n", e->entry10);
-        f = 1;
-    }
-    if(strstr(e->entry11, keyword)!= NULL)
-    {
-        printf("Entry 11: %s\n", e->entry11);
-        f = 1;
-    }
-    if(strstr(e->entry12, keyword)!= NULL)
-    {
-        printf("Entry 12: %s\n", e->entry12);
-        f = 1;
-    }
-    if(strstr(e->entry13, keyword)!= NULL)
-    {
-        printf("Entry 13: %s\n", e->entry13);
-        f = 1;
-    }
-    if(strstr(e->entry14, keyword)!= NULL)
-    {
-        printf("Entry 14: %s\n", e->entry14);
-        f = 1;
-    }
-    if(strstr(e->entry15, keyword)!= NULL)
-    {
-        printf("Entry 15: %s\n", e->entry15);
-        f = 1;
+        line[strcspn(line, "\n")] != 0;  //remove new line character
+        if(strstr(line, keyword) != NULL)
+        {
+            printf("Entry %d: %s\n", entry_num, line);
+            f = 1;
+        }
+        entry_num++;
     }
 
     if(!f)
     {
-        printf("No entries found using that keyword '%s'.\n", keyword);
+        printf("No entries were found \"%s\".\n", keyword);
     }
+    
+    fclose(entries);
 }
 
+
+
+
+
+void exit_the_program() 
+{
+printf("Of course, ciao\n");
+exit(0); 
+}
+void error_message()
+{
+    printf("This page is currently unavailable\n");
+    printf("If you need further help please call 817-739-3672 and ask for Arthur ");
+}
 void calendar()
 {
     printf("           AUGUST          \n");
@@ -664,399 +486,9 @@ void calendar()
     printf("--- --- --- --- --- --- ---\n");
 }
 
-void Backup(struct Entries* e, struct Backup* b)
+void help()
 {
-    int option;
-    printf("Which entry do you want to backup from 1-15?\n");
-    scanf("%d",&option);
-    switch(option)
-    {
-        case 1:
-        if(strlen(e->entry1) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry1);
-            strcpy(b->back1, e->entry1);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 2:
-        if(strlen(e->entry2) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry2);
-            strcpy(b->back2, e->entry2);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 3:
-        if(strlen(e->entry3) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry3);
-            strcpy(b->back3, e->entry3);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 4:
-        if(strlen(e->entry4) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry4);
-            strcpy(b->back4, e->entry4);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 5:
-        if(strlen(e->entry5) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry5);
-            strcpy(b->back5, e->entry5);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 6:
-        if(strlen(e->entry6) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry6);
-            strcpy(b->back6, e->entry6);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 7:
-        if(strlen(e->entry7) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry7);
-            strcpy(b->back7, e->entry7);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 8:
-        if(strlen(e->entry8) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry8);
-            strcpy(b->back8, e->entry8);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 9:
-        if(strlen(e->entry9) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry9);
-            strcpy(b->back9, e->entry9);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 10:
-        if(strlen(e->entry10) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry10);
-            strcpy(b->back10, e->entry10);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 11:
-        if(strlen(e->entry1) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry11);
-            strcpy(b->back11, e->entry11);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-                case 12:
-        if(strlen(e->entry1) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry12);
-            strcpy(b->back12, e->entry12);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-                case 13:
-        if(strlen(e->entry1) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry13);
-            strcpy(b->back13, e->entry13);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 14:
-        if(strlen(e->entry14) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry14);
-            strcpy(b->back14, e->entry14);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        case 15:
-        if(strlen(e->entry15) > 0)
-        {
-            printf("This entry will be saved: %s", e->entry15);
-            strcpy(b->back15, e->entry15);
-            printf("Backup Complete\n");
-        }
-        else
-        {
-            printf("There is no data to backup\n");
-        }
-        break;
-        
-    }
-}
-
-void Restore(struct Entries* e, struct Backup* b)
-{
-    int option;
-    printf("Which entry do you want to restore?\n");
-    scanf("%d", &option);
-    switch(option)
-    {
-        case 1:
-        if(strlen(b->back1) > 0)
-        {
-            printf("This entry will be restored: %s", b->back1);
-            strcpy(e->entry1, b->back1);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 2:
-        if(strlen(b->back2) > 0)
-        {
-            printf("This entry will be restored: %s", b->back2);
-            strcpy(e->entry2, b->back2);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 3:
-        if(strlen(b->back3) > 0)
-        {
-            printf("This entry will be restored: %s", b->back3);
-            strcpy(e->entry3, b->back3);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 4:
-        if(strlen(b->back4) > 0)
-        {
-            printf("This entry will be restored: %s", b->back4);
-            strcpy(e->entry4, b->back4);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 5:
-        if(strlen(b->back5) > 0)
-        {
-            printf("This entry will be restored: %s", b->back5);
-            strcpy(e->entry5, b->back5);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 6:
-        if(strlen(b->back6) > 0)
-        {
-            printf("This entry will be restored: %s", b->back6);
-            strcpy(e->entry6, b->back6);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 7:
-        if(strlen(b->back7) > 0)
-        {
-            printf("This entry will be restored: %s", b->back7);
-            strcpy(e->entry7, b->back7);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 8:
-        if(strlen(b->back1) > 0)
-        {
-            printf("This entry will be restored: %s", b->back8);
-            strcpy(e->entry8, b->back8);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 9:
-        if(strlen(b->back9) > 0)
-        {
-            printf("This entry will be restored: %s", b->back9);
-            strcpy(e->entry9, b->back9);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 10:
-        if(strlen(b->back10) > 0)
-        {
-            printf("This entry will be restored: %s", b->back10);
-            strcpy(e->entry10, b->back10);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 11:
-        if(strlen(b->back11) > 0)
-        {
-            printf("This entry will be restored: %s", b->back11);
-            strcpy(e->entry11, b->back11);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 12:
-        if(strlen(b->back12) > 0)
-        {
-            printf("This entry will be restored: %s", b->back12);
-            strcpy(e->entry12, b->back12);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 13:
-        if(strlen(b->back13) > 0)
-        {
-            printf("This entry will be restored: %s", b->back13);
-            strcpy(e->entry13, b->back13);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-        case 14:
-        if(strlen(b->back14) > 0)
-        {
-            printf("This entry will be restored: %s", b->back14);
-            strcpy(e->entry14, b->back14);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-                case 15:
-        if(strlen(b->back15) > 0)
-        {
-            printf("This entry will be restored: %s", b->back15);
-            strcpy(e->entry15, b->back15);
-            printf("Entry has been restored");
-        }
-        else
-        {
-            printf("There is no backup's available");
-        }
-        break;
-    }
-}
-
-void exit_the_program() 
-{
-
-printf("Of course, ciao\n");
-exit(0); 
-
-
-}
-void error_message( )
-{
-    printf("This page is currently unavailable\n");
-    printf("If you need further help please call 817-739-3672 and ask for Arthur ");
+printf("\n If you need further assistance, please call 817-739-3672 and ask for Arthur. \n");
 }
 
 int main ()
@@ -1065,10 +497,13 @@ int main ()
     char name[100];
     int choice; 
     char password[100];
-    //char user_name[100] = "Arthur_Morgan2027";
-    //char user_password[100] = "John";
+    char user_name[100]; 
+    char user_password[100];
     struct Entries e = {"","","","","","","","","","","","","","",""};
     struct Backup b = {"","","","","","","","","","","","","","",""};
+    struct Entries entries;
+    memset(&entries, 0, sizeof(entries));
+
 
   printf("  ____________             __________\n");
     printf(" /           /\\           /         /|\n");
@@ -1089,109 +524,94 @@ int main ()
     printf("|           |  |       |           | |\n");
     printf("|           |  |       |           | |\n");
     printf("|___________| /        |___________|/\n");
+    printf("Hello welcome to scribble\n");
 
-    /*printf("Hello welcome to scribble\n)");
-    printf("Please enter your username and password to access the app: \n\n"); 
 
-    printf("Enter your user name: "); 
-    fgets(password, sizeof(name), stdin);
-
-    printf("Enter your password: ");
-    fgets(password, sizeof(password), stdin);
-
-    name[strlen(name) - 1] = '\0'; 
-    password[strlen(password) - 1] = '\0'; 
-
-    while(strcmp(password, user_password) != 0 && strcmp (name, user_name) != 0 )
-    {
-    printf("Incorrect credentials, renter your information.\n"); 
-    printf("Enter your user name: "); 
-    fgets(password, sizeof(name), stdin);
-
-    printf("Enter your password: ");
-    fgets(password, sizeof(password), stdin);
-
-    name[strlen(name) - 1] = '\0'; 
-    password[strlen(password) - 1] = '\0'; 
-    }*/
-
-	int i=1;
-	while(i==1)
+	int choices;
+	while(1)
 	{
-		int p;
-		printf("\nif you want to start again enter 1, if you want to quit enter 0: ");
-		scanf("%d", &p);
-		if(p==1)
-		{
-			printf("\nWelcome :), what would you like to do today?\n\n");
+		
+			printf("\nWelcome to Scribble!\n\n");
 			printf("1. Register\n");
 			printf("2. Login\n");
 			printf("3. Create Diary Entry\n");
 			printf("4. View Diary Entries\n");
 			printf("5. Edit Diary Entry\n");
-			printf("6. Delete Diary Entry\n");
-			printf("7. Search Diary Entries\n");
-			printf("8. Categorize Entries\n");
-			printf("9. View Calendar\n");
-			printf("10. Backup Entries\n");
-			printf("11. Restore Entries\n");
-			printf("12. Help\n");
-			printf("13. Exit\n");
+			printf("6. Search Diary Entries\n");
+			printf("7. View Calendar\n");
+			printf("8. Backup Entries\n");
+			printf("9. Help\n");
+			printf("10. Exit\n");
 			printf("Enter your choice: ");
 			scanf("%d", &choice);
 			getchar();
+
 			switch (choice)
 			{
 			case 1:
 				register_for_scribble();
 				break;
 			case 2:
-				login();
-				break;
-			case 3:
-				create_new_entry(&e);
-				break;
-			case 4:
-				view_entry(&e);
-				break;
-			case 5:
-				error_message();
-				break;
-			case 6:
-				delete_entry(&e);
-				break;
-			case 7:
-				search_for_entry(&e);
-				break;
-			case 8:
-				error_message();
-				break;
-			case 9:
-				calendar();
-				break;
-			case 10:
-				Backup(&e,&b);
-				break;
-			case 11:
-				Restore(&e,&b);
-				break;
-			case 12:
-				error_message();
-				break;
-			case 13:
-				exit_the_program();
-				break;
-			}
-		}
-		else if(p==0)
-		{
-			i=0;
-		}
-		else 
-		{printf("ERROR! Invalid input, enter 1 or 0 only!\n");}
-	}
+				if(login())
+                {
+                    struct Entries entries;
+                    memset(&entries, 0, sizeof(entries)); //initialize the structure
 
-   error_message();
+                    while(1)
+                    {
+                        printf("\nMenu:\n");
+                        printf("1. Create new entry\n");
+                        printf("2. View and entry\n");
+                        printf("3. Edit and entry\n");
+                        printf("4. Search entries\n");
+                        printf("5. Calendar\n");
+                        printf("6. Backup Entries\n");
+                        printf("7. Help\n");
+                        printf("8. Exit\n");
+                        printf("What would you like to do? (enter a number): \n");
+                        scanf("%d", &choices);
+                        getchar();
 
-	return 0;
+                        switch(choices)
+                        {
+                            case 1:
+                            create_new_entry(&e);
+                            break;
+                            case 2:
+                            view_entry(&e);
+                            break;
+                            case 3:
+                            edit_entry(&e);
+                            break;
+                            case 4:
+                            search_entry(&e);
+                            break;
+                            case 5:
+                            calendar();
+                            break;
+                            case 6:
+                            //Backup();
+                            break;
+                            case 7:
+                            help();
+                            break;
+                            case 8:
+                            return 0;
+                            default:
+                            printf("Invalid choice. Please try again. \n");
+
+                        }
+                    }
+                }
+				break;
+                case 3:
+                return 0;
+                default:
+                printf("Invalid choice. Please try again. \n");
+            }
+    }
+    return 0;
 }
+			
+
+		
