@@ -46,6 +46,7 @@ void create_new_entry(struct Entries* e)
     FILE *entries;
     FILE *view;
     FILE *backup;
+    // opens all files only in read mode to check if file is empty or not
     entries=fopen("entries.txt", "r");
     view=fopen("view.txt", "r");
     backup=fopen("backup.txt","r");
@@ -75,6 +76,7 @@ void create_new_entry(struct Entries* e)
     fclose(entries);
     fclose(view);
     fclose(backup);
+    //If main entry or back file is empty, uses write and read to avoid new line character at the beginning and append mode if there other entries to avoid overwriting
     if(sizeE==0 || sizeB==0)
     {
         backup=fopen("backup.txt", "w+");
@@ -87,6 +89,7 @@ void create_new_entry(struct Entries* e)
         entries=fopen("entries.txt", "a+");
         view=fopen("view.txt", "a+");
     }
+    //increments count variable everytime length of the entry aint equal 0 to keep track of current entry number
     for(int i=0; i<99; i++)
         {
             if (e->length[i]!=0)
@@ -100,6 +103,7 @@ void create_new_entry(struct Entries* e)
         {
             printf("Make the entry%d: ", count);
             fgets(e->Entry[i], sizeof(e->Entry[i]), stdin);
+	    //checks for character limit
             int l=strlen(e->Entry[i]);
             if(l>250)
             {
@@ -111,6 +115,7 @@ void create_new_entry(struct Entries* e)
                 fclose(view);
                 return;
             }
+	    //deletes new line character which came due fgets fucntion from the array of entries lengths, to have accurate length of each entry
             e->Entry[i][strcspn(e->Entry[i], "\n")] = 0;
             e->length[i]=strlen(e->Entry[i]);
             fprintf(entries, "%s\n", e->Entry[i]);
@@ -139,6 +144,7 @@ void view_entry(struct Entries* e)
     printf("File for search can't be opened");
     return;
     }
+    //this code is made in case if main entry file cannot be acceses, so programm would grab data from backup file
     if(entries==NULL)
     {
     printf("File for viewing entries can't be opened\n");
@@ -193,10 +199,12 @@ void view_entry(struct Entries* e)
     {
         printf("Error, Invalid entry number");
     }
+    //grabs entry's byte size from the length file
     for(int i=0; i<userinput; i++)
     {
     fscanf(view, "%d", &e->length[i]);
     }
+    //makes summation of each entry byte size before desired entry to find entry's byte location from beginning of the view file
     for(int i=0; i<userinput-1; i++)
     {
         if (e->length[i]!=0)
@@ -218,6 +226,7 @@ void view_entry(struct Entries* e)
     }
     else
     {
+	//finds entry location in the file and scans entire line into local array and prints result to the user
         fseek(entries, stringlocation-1, SEEK_SET);
         fgets(e->View[count],sizeof(e->View[count]), entries);
         if(strlen(e->View[count])==0)
